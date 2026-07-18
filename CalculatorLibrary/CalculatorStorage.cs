@@ -25,20 +25,12 @@ public class CalculatorStorage
     public CalculatorStorage()
     {
         Calculations = new List<Calculation>();
-
-        string currentDir = Directory.GetCurrentDirectory();
-        string filePath = Path.Combine(currentDir, "Calculations.txt");
-
-        _writer = new StreamWriter(filePath, append: true);
     }
 
-    public void PersistData()
-    {
-        _writer.WriteLine(Counter.ToString());
+    /// <summary>
+    /// Gets counter value.
+    /// </summary>
+    /// <returns>Number of times the calculator has been used</returns>
+    public int NumberOfCalculations() => Counter;
 
-        foreach (var text in Calculations)
-        {
-            _writer.WriteLine(text.DisplayText);
-        }
-    }
 }
