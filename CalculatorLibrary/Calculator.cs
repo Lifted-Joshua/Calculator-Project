@@ -1,13 +1,10 @@
 ﻿using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary;
 
 public class Calculator
 {
-    private int _counter = 0;
     private CalculatorStorage _calculatorStorage;
     JsonWriter writer;
     public Calculator(CalculatorStorage calculatorStorage)
@@ -33,6 +30,7 @@ public class Calculator
     public double DoOperation(double num1, double num2, string op)
     {
         _calculatorStorage.Counter++;
+        Console.WriteLine("Calculator usage count: " + _calculatorStorage.Counter);
 
 
         double result = double.NaN; // Default value is "not-a-number" which we use if an operation, such as division, could result in an error.
@@ -96,6 +94,7 @@ public class Calculator
     public double DoAdvancedOperation(double num1, string op)
     {
         _calculatorStorage.Counter++;
+        Console.WriteLine("Calculator usage count: " + _calculatorStorage.Counter);
 
         double result = double.NaN; // Default value is "not-a-number" which we use if an operation, such as division, could result in an error.
         writer.WriteStartObject();
@@ -146,10 +145,14 @@ public class Calculator
                 break;
         }
 
+        writer.WritePropertyName("Result");
+        writer.WriteValue(result);
+        writer.WriteEndObject();
+
+
         return result;
     }
 
-    // CalculatorLibrary.cs
     public void Finish()
     {
 
